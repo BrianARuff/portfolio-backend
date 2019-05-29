@@ -34,13 +34,13 @@ router.post("/newuser/:username/:password/:email", (req, res) => {
       INSERT INTO users (email, password, username)
       VALUES (
         $1,
-        crypt('$2', gen_salt('$3')),
+        crypt($2, gen_salt($3)),
         $4
       )
     `,
         [email, password, process.env.SALT, username]
       )
-      .then(users => res.status(200).json(users))
+      .then(users => res.status(200).json(users.rowCount))
       .catch(err => res.status(500).json(err));
   }
 });
@@ -53,7 +53,7 @@ router.get("/users", (req, res) => {
       if (userCount < 1 || !userCount) {
         res.status(204).json({ userFound: "No User Found" });
       } else {
-        res.status(200).json(user.rows[0]);
+        res.status(200).json(user.rows);
       }
     })
     .catch(err => res.status(500).json(err));
