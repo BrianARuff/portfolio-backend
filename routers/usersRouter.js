@@ -22,14 +22,15 @@ router.get("/:username/:password", (req, res) => {
         res.status(200).json(user.rows[0]);
       }
     })
-    .catch(err => console.log(err));
+    .catch(err => res.status(500).json(err));
 });
 
 router.post("/newuser/:username/:password/:email", (req, res) => {
   const { username, password, email } = req.params;
   if (username && password && email) {
-    pool.query(
-      `
+    pool
+      .query(
+        `
       INSERT INTO users (email, password, username)
       VALUES (
         $1,
@@ -37,8 +38,10 @@ router.post("/newuser/:username/:password/:email", (req, res) => {
         $4
       )
     `,
-      [email, password, process.env.SALT, username]
-    );
+        [email, password, process.env.SALT, username]
+      )
+      .then(users => res.status(200).json(users))
+      .catch(err => res.status(500).json(err));
   }
 });
 
@@ -53,7 +56,7 @@ router.get("/users", (req, res) => {
         res.status(200).json(user.rows[0]);
       }
     })
-    .catch(err => console.log(err));
+    .catch(err => res.status(500).json(err));
 });
 
 module.exports = router;
