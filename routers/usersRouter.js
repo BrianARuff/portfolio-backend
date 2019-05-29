@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {client, pool} = require("../database");
+const { client, pool } = require("../database");
 
 router.get("/:username/:password", (req, res) => {
   const { username, password } = req.params;
@@ -10,7 +10,8 @@ router.get("/:username/:password", (req, res) => {
       ` SELECT username, email, password FROM users 
         WHERE users.username = $1
         AND users.password = crypt($2, password)
-      `, [username, password]
+      `,
+      [username, password]
     )
     .then(user => {
       console.log("Users ==>", user.rows);
@@ -22,6 +23,23 @@ router.get("/:username/:password", (req, res) => {
       }
     })
     .catch(err => console.log(err));
+});
+
+router.post("/newuser/:username/:password/:email", (req, res) => {
+  const { username, password, email } = req.params;
+  if (username && password && email) {
+    pool.query(
+      `
+      INSERT INTO users (email, password, username)
+      VALUES (
+        $1,
+        crypt('$2', gen_salt('$3')),
+        $4
+      )
+    `,
+      [email, password, process.env.SALT, username]
+    );
+  }
 });
 
 router.get("/users", (req, res) => {
