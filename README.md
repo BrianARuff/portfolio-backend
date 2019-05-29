@@ -5,6 +5,7 @@
 - Post new User https://brianruff-portfolio-backend.herokuapp.com/api/newuser/:email/:password/:username
 
 ### Technologies in Use (so far)
+
 - Express --> https://expressjs.com/
 - Node --> https://nodejs.org/en/docs/ || https://nodejs.org/
 - Nodemon --> https://nodemon.io/
