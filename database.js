@@ -5,11 +5,11 @@ const { Pool, Client } = require("pg");
 const connectionString = `postgresql::${username}:${password}@localhost:5432/portfolio`;
 
 const pool = new Pool({
-  connectionString: connectionString,
+  connectionString: process.env.DATABASE_URL || connectionString
 });
 
 const client = new Client({
-  connectionString: connectionString,
+  connectionString: process.env.DATABASE_URL || connectionString
 });
 
 client.connect();
