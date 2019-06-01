@@ -52,8 +52,7 @@ router.get("/users", (req, res) => {
          req.socket.remoteAddress || 
          req.connection.socket.remoteAddress
   console.log("IP ADDRESS", ip);
-  console.log("IPV6", req.socket.address("IPv6"));
-  console.log("IPV4", req.socket.address("IPv4"));
+  console.log("IPV6", req.ip, req.ips);
 
   pool
     .query(`select * from users`)
