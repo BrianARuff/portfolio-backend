@@ -1,8 +1,9 @@
-## Portfolio Page - Backend
+# Portfolio Page - Backend
 
-- All users: https://brianruff-portfolio-backend.herokuapp.com/api/users
-- Specific User https://brianruff-portfolio-backend.herokuapp.com/api/:username/:password
-- Post new User https://brianruff-portfolio-backend.herokuapp.com/api/newuser/:email/:password/:username
+## API
+- All users --> https://brianruff-portfolio-backend.herokuapp.com/api/users
+- Specific User --> https://brianruff-portfolio-backend.herokuapp.com/api/:username/:password
+- Post new User --> https://brianruff-portfolio-backend.herokuapp.com/api/newuser/:email/:password/:username
 
 ### Technologies in Use (so far)
 
