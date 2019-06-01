@@ -28,6 +28,8 @@ router.get("/:username/:password", (req, res) => {
 
 router.post("/newuser/:username/:password/:email", (req, res) => {
   const { username, password, email } = req.params;
+  // created_at, updated_at, completed_at are set to default values via a custom trigger function desinged that updates the updated_at value.
+  // status is set to by default to active... active is the standard account status... banned potentially be the name of the status for permanent or temporary removal of an account.
   if (username && password && email) {
     pool
       .query(
