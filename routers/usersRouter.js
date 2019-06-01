@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { client, pool } = require("../database");
+const uuidV4 = require("uuid/v4");
 
 router.get("/:username/:password", (req, res) => {
   const { username, password } = req.params;
@@ -46,17 +47,25 @@ router.post("/newuser/:username/:password/:email", (req, res) => {
 });
 
 router.get("/users", (req, res) => {
+  var ip = (req.headers['x-forwarded-for'] || '').split(',').pop() || 
+         req.connection.remoteAddress || 
+         req.socket.remoteAddress || 
+         req.connection.socket.remoteAddress
+  console.log("IP ADDRESS", ip);
+
   pool
     .query(`select * from users`)
-    .then(user => {
-      const userCount = user.rows.length;
+    .then(users => {
+      const userCount = users.rows.length;
       if (userCount < 1 || !userCount) {
         res.status(204).json({ userFound: "No User Found" });
       } else {
-        res.status(200).json(user.rows);
+        res.status(200).json({users: users.rows});
       }
     })
     .catch(err => res.status(500).json(err));
 });
+
+// delete user by uuid
 
 module.exports = router;
