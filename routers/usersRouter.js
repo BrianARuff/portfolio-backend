@@ -52,14 +52,13 @@ router.get("/users", (req, res) => {
          req.socket.remoteAddress || 
          req.connection.socket.remoteAddress
   console.log("IP ADDRESS", ip);
-  console.log("IPV6", req.ip, req.ips);
 
   pool
     .query(`select * from users`)
     .then(users => {
-      const userCount = users.rows.length;
-      if (userCount < 1 || !userCount) {
-        res.status(204).json({ userFound: "No User Found" });
+      const usersCount = users.rows.length;
+      if (usersCount < 1 || !usersCount) {
+        res.status(204).json({ usersFound: "No User Found" });
       } else {
         res.status(200).json({users: users.rows});
       }
